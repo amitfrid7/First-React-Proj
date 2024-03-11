@@ -1,10 +1,33 @@
+const { useState, useEffect } = React
+const { useParams, useNavigate } = ReactRouter
+const { Link } = ReactRouterDOM
+
+import { bookService } from "../services/book.service.js"
 import { LongTxt } from "./LongTxt.jsx"
 
-export function BookDetails({ book, onGoBack }) {
+export function BookDetails() {
 
-    const bookCondition = getBookCondition()
-    const bookPageCount = getPageCountTxt()
-    const bookPriceColor = getPriceColor()
+    const [isLoading, setIsLoading] = useState(true)
+    const [book, setBook] = useState(null)
+    const params = useParams()
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        loadBook()
+    }, [params.bookId])
+
+    function loadBook() {
+        setIsLoading(true)
+        bookService.get(params.bookId)
+            .then(book => setBook(book))
+            .catch((err) => {
+                console.log('Had issues loading book', err)
+                navigate('/books')
+            })
+            .finally(() => {
+                setIsLoading(false)
+            })
+    }
 
     function getPageCountTxt() {
         if (book.pageCount > 500) return 'Serious Reading'
@@ -23,19 +46,20 @@ export function BookDetails({ book, onGoBack }) {
         if (book.listPrice.amount < 20) return 'green'
     }
 
+    if (isLoading) return <div>Loading...</div>
 
     return <section className="book-details">
         <h2>{book.title}</h2>
         <h3>{book.subtitle}</h3>
-        <h4>Book Condition: {bookCondition}</h4>
+        <h4>Book Condition: {getBookCondition()}</h4>
 
         <LongTxt txt={book.description} />
-        
+
         <img src={`../BooksImages/${book.thumbnail}`} alt="" />
         {book.listPrice.isOnSale && (<img src="../BooksImages/sale.png" />)}
 
-        <h5 className={bookPriceColor}>Price: {book.listPrice.amount} {book.listPrice.currencyCode}</h5>
-        <h5>{bookPageCount}</h5>
-        <button onClick={onGoBack}>Go Back</button>
+        <h5 className={getPriceColor()}>Price: {book.listPrice.amount} {book.listPrice.currencyCode}</h5>
+        <h5>{getPageCountTxt()}</h5>
+        <Link to="/books"><button>Go Back</button></Link>
     </section>
 }

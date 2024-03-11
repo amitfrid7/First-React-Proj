@@ -7,7 +7,7 @@ import { BookFilter } from "../cmps/BookFilter.jsx"
 
 export function BookIndex() {
     const [books, setBooks] = useState(null)
-    const [selectedBook, setSelectedBook] = useState(null)
+    // const [selectedBook, setSelectedBook] = useState(null)
     const [filterBy, setFilterBy] = useState(bookService.getDefaultFilter())
 
     useEffect(() => {
@@ -28,40 +28,36 @@ export function BookIndex() {
     function onRemoveBook(bookId) {
         bookService.remove(bookId)
             .then(() => {
-                setBooks((prevBooks) => {return prevBooks.filter(book => book.id !== bookId)})
+                setBooks((prevBooks) => { return prevBooks.filter(book => book.id !== bookId) })
             })
-            .catch((err) => {console.log('err:', err)})
+            .catch((err) => { console.log('err:', err) })
     }
 
-    function onSelectBook(book) {
-        setSelectedBook(book)
-    }
+    // function onSelectBook(book) {
+    //     setSelectedBook(book)
+    // }
 
     if (!books) return <div>Loading...</div>
     return (
         <section className="book-index flex flex-column align-center">
-            {
-                !selectedBook && <React.Fragment>
-                    <BookFilter
-                        onSetFilter={onSetFilter}
-                        filterBy={filterBy}
-                    />
-                    <BookList
-                        books={books}
-                        onRemoveBook={onRemoveBook}
-                        // onUpdateBook={onUpdateBook}
-                        onSelectBook={onSelectBook}
-                    />
-                </React.Fragment>
-            }
+            <BookFilter
+                onSetFilter={onSetFilter}
+                filterBy={filterBy}
+            />
+            <BookList
+                books={books}
+                onRemoveBook={onRemoveBook}
+                // onUpdateBook={onUpdateBook}
+                // onSelectBook={onSelectBook}
+            />
 
-            {
+            {/* {
                 selectedBook &&
                 <BookDetails
                     book={selectedBook}
                     onGoBack={() => onSelectBook(null)}
                 />
-            }
+            } */}
         </section>)
 
 }
