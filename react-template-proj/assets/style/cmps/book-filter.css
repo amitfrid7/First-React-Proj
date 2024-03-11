@@ -1,0 +1,5 @@
+.book-filter input {
+    margin: 1em;
+    border-radius: .5em;
+    border: solid .5px lightblue;
+}

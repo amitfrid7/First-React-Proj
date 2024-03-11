@@ -1,0 +1,26 @@
+.app-header {
+  display: flex;
+  background-color: var(--clr1);
+  color: var(--clr1bg);
+  padding: .5em;
+}
+
+.app-header h1 {
+  flex-grow: 1;
+}
+
+.app-header nav {
+  display: flex;
+  gap: 1em;
+  align-items: center;
+}
+
+.app-header nav a:hover {
+  border-block-end: solid 3px white;
+}
+
+@media(max-width: 720px) {
+  .app-header {
+    color: var(--clr2bg);
+  }
+}
