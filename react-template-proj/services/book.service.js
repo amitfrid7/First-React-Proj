@@ -449,21 +449,21 @@ const books = [
 utilService.saveToStorage(BOOK_KEY, books)
 
 export const bookService = {
-    query,
-    get,
-    remove,
-    save,
-    getEmptyBook,
-    getDefaultFilter,
-    books,
-    // getFilterBy,
-    // setFilterBy
+  query,
+  get,
+  remove,
+  save,
+  getEmptyBook,
+  getDefaultFilter,
+  books,
+  // getFilterBy,
+  // setFilterBy
 }
 
 window.cs = bookService
 
-function getEmptyBook(title = '', listPrice = 100) {
-    return { id: '', title, listPrice }
+function getEmptyBook(title = '', listPrice = { amount: 100, currencyCode: 'EUR' }) {
+  return { id: '', title, listPrice, thumbnail: `/${utilService.getRandomIntInclusive(1, 20)}.jpg` }
 }
 
 // function _createBook(title, listPrice) {
@@ -484,38 +484,38 @@ function getEmptyBook(title = '', listPrice = 100) {
 // }
 
 function query(filterBy = getDefaultFilter()) {
-    return storageService.query(BOOK_KEY)
-        .then(books => {
-            if (filterBy.txt) {
-                const regex = new RegExp(filterBy.txt, 'i')
-                books = books.filter(book => regex.test(book.title))
-            }
-            if (filterBy.price) {
-                books = books.filter(book => book.listPrice.amount >= filterBy.price)
-            }
-            return books
-        })
+  return storageService.query(BOOK_KEY)
+    .then(books => {
+      if (filterBy.txt) {
+        const regex = new RegExp(filterBy.txt, 'i')
+        books = books.filter(book => regex.test(book.title))
+      }
+      if (filterBy.price) {
+        books = books.filter(book => book.listPrice.amount >= filterBy.price)
+      }
+      return books
+    })
 }
 
 function get(bookId) {
-    return storageService.get(BOOK_KEY, bookId)
-    // return axios.get(BOOK_KEY, bookId)
+  return storageService.get(BOOK_KEY, bookId)
+  // return axios.get(BOOK_KEY, bookId)
 }
 
 function remove(bookId) {
-    return storageService.remove(BOOK_KEY, bookId)
+  return storageService.remove(BOOK_KEY, bookId)
 }
 
 function save(book) {
-    if (book.id) {
-        return storageService.put(BOOK_KEY, book)
-    } else {
-        return storageService.post(BOOK_KEY, book)
-    }
+  if (book.id) {
+    return storageService.put(BOOK_KEY, book)
+  } else {
+    return storageService.post(BOOK_KEY, book)
+  }
 }
 
 function getDefaultFilter() {
-    return { txt: '', price: 50 }
+  return { txt: '', price: 50 }
 }
 
 

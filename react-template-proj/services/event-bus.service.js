@@ -12,7 +12,6 @@ export function showErrorMsg(txt) {
     showUserMsg({ txt, type: 'error' })
 }
 
-
 function createEventEmitter() {
     const listenersMap = {}
     // Trick for DEBUG
@@ -28,45 +27,10 @@ function createEventEmitter() {
         // Use this function to emit an event
         emit(evName, data) {
             if (!listenersMap[evName]) return
-            console.log('listenersMap:', listenersMap)
             listenersMap[evName].forEach(listener => listener(data))
         }
     }
 }
-
-
-
-
-// Service Testing:
-// Example for using the service
-// const unsubscribe = eventBusService.on('some-event', (data) => {
-//     console.log('Got some-event:', data)
-// })
-
-
-// eventBusService.on('some-event', (data) => {
-//     console.log('Me too:', data)
-// })
-
-// eventBusService.on('some-event-2', (data) => {
-//     console.log('Me too:', data)
-// })
-
-// // eventBusService.emit('some-event', { num: 100 })
-
-// // // Just as example - unsubscribe after 2 secs
-// setTimeout(() => {
-//     unsubscribe()
-// }, 2000)
-
-// setTimeout(() => eventBusService.emit('some-event', 100), 3000)
-
-
-
-
-
-
-
 
 window.showSuccessMsg = showSuccessMsg
 window.showErrorMsg = showErrorMsg

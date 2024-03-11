@@ -41,11 +41,11 @@ export function BookFilter({ onSetFilter, filterBy }) {
                 onChange={handleChange}
                 placeholder="By Price"/>
 
-            <label htmlFor="onSale"></label>
+            {/* <label htmlFor="onSale"></label>
             <input
              type="checkbox" 
              name="onSale" 
-             id="onSale" />
+             id="onSale" /> */}
         </form>
     </section>
 }

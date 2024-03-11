@@ -1,7 +1,5 @@
 
 export function AboutUs() {
-
-    console.log('H');
     
     return <section className="about">
         <h3>We are all about cars!</h3>

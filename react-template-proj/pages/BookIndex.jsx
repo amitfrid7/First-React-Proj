@@ -1,8 +1,9 @@
 const { useState, useEffect } = React
+const { Link } = ReactRouterDOM
 import { bookService } from "../services/book.service.js"
 import { BookList } from "../cmps/BookList.jsx"
 import { BookFilter } from "../cmps/BookFilter.jsx"
-import { eventBusService, showSuccessMsg, showUserMsg } from "../services/event-bus.service.js"
+import { showSuccessMsg } from "../services/event-bus.service.js"
 
 export function BookIndex() {
     const [books, setBooks] = useState(null)
@@ -42,6 +43,7 @@ export function BookIndex() {
                 onSetFilter={onSetFilter}
                 filterBy={filterBy}
             />
+            <Link to="/books/edit"><button>Add a book</button></Link>
             <BookList
                 books={books}
                 onRemoveBook={onRemoveBook}

@@ -49,6 +49,7 @@ export function BookDetails() {
     if (isLoading) return <div>Loading...</div>
 
     return <section className="book-details">
+        <Link to={`/books/edit/${params.bookId}`}><button>Edit Book</button></Link>
         <h2>{book.title}</h2>
         <h3>{book.subtitle}</h3>
         <h4>Book Condition: {getBookCondition()}</h4>
