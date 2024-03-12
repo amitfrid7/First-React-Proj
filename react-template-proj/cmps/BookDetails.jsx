@@ -81,42 +81,45 @@ export function BookDetails() {
 
     if (isLoading) return <div>Loading...</div>
 
-    return <section className="book-details flex justify-between">
+    return <section className="book-details flex justify-between align-center">
         <div className="details-container">
-        {isOnReview && (
-            <AddReview
-                bookId={params.bookId}
-                addReview={onAddReview}
-                onCloseReview={() => setIsOnReview(false)}
-            />
-        )}
+            <div className="next-prev flex justify-between">
+                <Link to={`/books/${book.prevBookId}`}><button>Prev</button></Link>
+                <Link to={`/books/${book.nextBookId}`}><button>Next</button></Link>
+            </div>
+            {isOnReview && (
+                <AddReview
+                    bookId={params.bookId}
+                    addReview={onAddReview}
+                    onCloseReview={() => setIsOnReview(false)}
+                />
+            )}
 
-        <Link to={`/books/edit/${params.bookId}`}><button>Edit Book</button></Link>
-        <h2>{book.title}</h2>
-        <h3>{book.subtitle}</h3>
-        <h4>Book Condition: {getBookCondition()}</h4>
+            <h2>{book.title}</h2>
+            <h3>{book.subtitle}</h3>
+            <h4>Book Condition: {getBookCondition()}</h4>
 
-        <LongTxt txt={book.description} />
+            <LongTxt txt={book.description} />
 
-        <h5 className={getPriceColor()}>Price: {book.listPrice.amount} {book.listPrice.currencyCode}</h5>
-        <h5>{getPageCountTxt()}</h5>
+            <h5 className={getPriceColor()}>Price: {book.listPrice.amount} {book.listPrice.currencyCode}</h5>
+            <h5>{getPageCountTxt()}</h5>
 
-        {book.reviews && book.reviews.length && (
-            <ReviewList book={book} onRemoveReview={onRemoveReview} />
-        )}
+            {book.reviews && book.reviews.length && (
+                <ReviewList book={book} onRemoveReview={onRemoveReview} />
+            )}
 
-        <button
-            onClick={() => setIsOnReview(prevIsOnReview => !prevIsOnReview)}
-        >
-            Add Review
-        </button>
-
-        <Link to="/books"><button>Go Back</button></Link>
+            <button
+                onClick={() => setIsOnReview(prevIsOnReview => !prevIsOnReview)}
+            >
+                Add Review
+            </button>
+            <Link to={`/books/edit/${params.bookId}`}><button>Edit Book</button></Link>
+            <Link to="/books"><button>Go Back</button></Link>
         </div>
         <div className="img-container">
             <img src={`../BooksImages/${book.thumbnail}`} alt="" />
             {book.listPrice.isOnSale && (<img src="../BooksImages/sale.png" className="on-sale-img" />)}
-
         </div>
+
     </section>
 }

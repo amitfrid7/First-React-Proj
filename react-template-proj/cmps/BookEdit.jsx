@@ -4,7 +4,7 @@ const { useNavigate, useParams } = ReactRouter
 import { bookService } from "../services/book.service.js"
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js"
 
-export function BookEdit({ onUpdate, onCancelEdit }) {
+export function BookEdit({ onCancelEdit }) {
 
     const [bookToEdit, setBookToEdit] = useState(bookService.getEmptyBook())
     const navigate = useNavigate()
@@ -32,7 +32,6 @@ export function BookEdit({ onUpdate, onCancelEdit }) {
             .catch(() => {
                 showErrorMsg('Could not save book')
             })
-        // onUpdate(bookToEdit)
     }
 
     function handleChange({ target }) {
@@ -59,7 +58,7 @@ export function BookEdit({ onUpdate, onCancelEdit }) {
         }
     }
     return (
-        <section className="book-edit">
+        <section className="book-edit flex flex-column align-center">
             <h2>Edit Book</h2>
             <div className="book-edit-container">
                 <form onSubmit={onSaveBook}>

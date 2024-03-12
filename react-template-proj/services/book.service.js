@@ -502,6 +502,7 @@ function query(filterBy = getDefaultFilter()) {
 
 function get(bookId) {
   return storageService.get(BOOK_KEY, bookId)
+  .then((book) => _setNextPrevBookId(book))
   // return axios.get(BOOK_KEY, bookId)
 }
 
@@ -544,6 +545,19 @@ function removeReview(bookId, reviewId) {
 
 function getEmptyReview() {
   return { id: utilService.makeId(), fullName: '', rating: 1, readAt: '' }
+}
+
+function _setNextPrevBookId(book) {
+  return storageService.query(BOOK_KEY).then((books) => {
+    const bookIdx = books.findIndex((currBook) => currBook.id === book.id)
+    const nextBook = books[bookIdx + 1] ? books[bookIdx + 1] : books[0]
+    const prevBook = books[bookIdx - 1]
+      ? books[bookIdx - 1]
+      : books[books.length - 1]
+    book.nextBookId = nextBook.id
+    book.prevBookId = prevBook.id
+    return book
+  })
 }
 
 
