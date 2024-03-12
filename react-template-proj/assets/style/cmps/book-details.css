@@ -1,0 +1,17 @@
+.img-container {
+    position: relative;
+}
+
+.book-details img {
+    margin: 30px;
+    min-width: 50%;
+    max-width: 75%;
+}
+
+.on-sale-img {
+    position: absolute;
+    height: 50px;
+    width: 50px;
+    top: -1%;
+    left: -40%;
+}

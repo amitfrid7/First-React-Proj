@@ -456,6 +456,9 @@ export const bookService = {
   getEmptyBook,
   getDefaultFilter,
   books,
+  addReview,
+  getEmptyReview,
+  removeReview,
   // getFilterBy,
   // setFilterBy
 }
@@ -518,5 +521,29 @@ function getDefaultFilter() {
   return { txt: '', price: 50 }
 }
 
+function addReview(bookId, review) {
+  return get(bookId)
+    .then(book => {
+      if (book.reviews && book.reviews.length) {
+        book.reviews.push(review)
+      } else book.reviews = [review]
+      return book
+    })
+    .then(save)
+}
+
+function removeReview(bookId, reviewId) {
+  return get(bookId)
+    .then(book => {
+      const reviewIdx = book.reviews.findIndex(review => review.id === reviewId)
+      book.reviews.splice(reviewIdx, 1)
+      return book
+    })
+    .then(save)
+}
+
+function getEmptyReview() {
+  return { id: utilService.makeId(), fullName: '', rating: 1, readAt: '' }
+}
 
 
